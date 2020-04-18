@@ -85,17 +85,32 @@ function products(arr) {
 console.log('result:', products([1, 3, 9, 4]));
 console.log('output needs to be:', [108, 36, 12, 27]);
 
+/**
+ * Polynomial Complexity n^2
+ * We have nested for loops.
+ */
 function find0(array) {
+  let xToChange = []
+  let yToChange = []
+
+  for (let y = 0; y < array.length; y++) {
+    if (array[y].includes(0)) {
+      yToChange.push(y)
+    }
+    for (let x = 0; x < array[y].length; x++) {
+      if (array[y][x] === 0) {
+        xToChange.push(x)
+      }
+    }
+  }
 
   for (let y = 0; y < array.length; y++) {
     for (let x = 0; x < array[y].length; x++) {
-      if (array[y][x] === 0) {
-        array[y].forEach((num, i) => {
-          array[y][i] = 0
-        })
-        array[y].forEach((num, i) => {
-          array[y][i] = 0
-        })
+      if(xToChange.includes(x)) {
+        array[y][x] = 0
+      }
+      if(yToChange.includes(y)) {
+        array[y][x] = 0
       }
     }
   }
@@ -112,7 +127,7 @@ let array =
     [1, 1, 1, 1, 1]
   ];
 
-console.log( find0(array))
+console.log(find0(array))
 
 /**
  * Linear Complexity
@@ -127,7 +142,7 @@ function rotation(str1, str2) {
   for (let i = 0; i < str1.length; i++) {
     const firstChar = rotation[0];
     rotation = rotation.slice(1).concat(firstChar);
-    if(rotation === str2) {
+    if (rotation === str2) {
       return true
     }
   }
